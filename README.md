@@ -1,3 +1,7 @@
+## About this Project
+
+**This is basically a Order Processing system for a burger shop developed using ReactJs**
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
