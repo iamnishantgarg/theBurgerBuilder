@@ -102,6 +102,7 @@ class BurgerBuilder extends Component {
     for (let key in disabledInfo) {
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
+
     let orderSummary = (
       <OrderSummary
         ingredients={this.state.ingredients}
@@ -110,6 +111,7 @@ class BurgerBuilder extends Component {
         price={this.state.totalPrice}
       />
     );
+    // Spinner check
     if (this.state.loading) {
       orderSummary = <Spinner />;
     }
