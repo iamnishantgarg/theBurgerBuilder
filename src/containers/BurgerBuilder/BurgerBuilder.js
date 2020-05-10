@@ -6,6 +6,7 @@ import Wrapper from "../../Wrapper/Wrapper";
 import OrderSummary from "../../components/OrderSummary/OrderSummary";
 import axios from "../../axios-order";
 import Spinner from "../../components/UI//Spinner/Spinner";
+import withErrorHandler from "../../withErrorHander/withErrorHandler";
 // import axios from "axios";
 
 const INGREDIENT_PRICES = {
@@ -138,4 +139,4 @@ class BurgerBuilder extends Component {
   }
 }
 
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder, axios);
