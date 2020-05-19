@@ -23,6 +23,8 @@ class BurgerBuilder extends Component {
     purchasable: false,
     purchasing: false,
     loading: false,
+
+    error: null,
   };
 
   componentDidMount() {
@@ -30,6 +32,9 @@ class BurgerBuilder extends Component {
       .get("https://burgerbuilder-7144d.firebaseio.com/ingredients.json")
       .then((res) => {
         this.setState({ ingredients: res.data });
+      })
+      .catch((error) => {
+        this.setState({ error: error });
       });
   }
 
@@ -75,32 +80,33 @@ class BurgerBuilder extends Component {
   };
   purchaseContinueHandler = () => {
     // alert("You Continued");
-    this.setState({ loading: true });
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customerData: {
-        name: "Nishant Garg",
-        address: {
-          street: "test street",
-          zipcode: 344232,
-          country: "india",
-        },
-        email: "nishant@gmail.com",
-      },
-      deliveryMethod: "fastest",
-    };
-    axios
-      .post("/orders.json", order)
-      .then((res) => {
-        this.setState({ loading: false, purchasing: false });
-        console.log(res);
-      })
-      .catch((err) => {
-        this.setState({ loading: false, purchasing: false });
+    // this.setState({ loading: true });
+    // const order = {
+    //   ingredients: this.state.ingredients,
+    //   price: this.state.totalPrice,
+    //   customerData: {
+    //     name: "Nishant Garg",
+    //     address: {
+    //       street: "test street",
+    //       zipcode: 344232,
+    //       country: "india",
+    //     },
+    //     email: "nishant@gmail.com",
+    //   },
+    //   deliveryMethod: "fastest",
+    // };
+    // axios
+    //   .post("/orders.json", order)
+    //   .then((res) => {
+    //     this.setState({ loading: false, purchasing: false });
+    //     console.log(res);
+    //   })
+    //   .catch((err) => {
+    //     this.setState({ loading: false, purchasing: false });
 
-        console.log(err);
-      });
+    //     console.log(err);
+    //   });
+    this.props.history.push("/checkout");
   };
   render() {
     const disabledInfo = { ...this.state.ingredients };
@@ -110,7 +116,7 @@ class BurgerBuilder extends Component {
 
     let orderSummary = <Spinner />;
 
-    let burger = <Spinner />;
+    let burger = this.state.error ? <p>Failed to load app</p> : <Spinner />;
     if (this.state.ingredients) {
       burger = (
         <Wrapper>

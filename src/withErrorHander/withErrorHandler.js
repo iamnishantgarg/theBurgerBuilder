@@ -4,17 +4,21 @@ import Wrapper from "../Wrapper/Wrapper";
 function withErrorHandler(WrappedComponent, axios) {
   return class extends Component {
     state = { error: null };
-    componentDidMount() {
-      axios.interceptors.request.use((req) => {
+    componentWillMount() {
+      this.reqInterceptors = axios.interceptors.request.use((req) => {
         this.setState({ error: null });
         return req;
       });
-      axios.interceptors.response.use(
+      this.resInterceptors = axios.interceptors.response.use(
         (res) => res,
         (error) => {
           this.setState({ error: error });
         }
       );
+    }
+    componentWillUnmount() {
+      axios.interceptors.request.eject(this.reqInterceptors);
+      axios.interceptors.response.eject(this.resInterceptors);
     }
     errorConfirmedHandler = () => {
       this.setState({ error: null });

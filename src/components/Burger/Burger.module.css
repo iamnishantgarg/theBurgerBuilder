@@ -6,6 +6,7 @@
   text-align: center;
   font-weight: bold;
   font-size: 1.2rem;
+  overflow-y: scroll;
 }
 
 @media (min-width: 500px) and (min-height: 400px) {
