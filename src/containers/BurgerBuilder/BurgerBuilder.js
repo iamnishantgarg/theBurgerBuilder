@@ -39,7 +39,7 @@ class BurgerBuilder extends Component {
       .reduce((sum, elm) => {
         return sum + elm;
       }, 0);
-    this.setState({ purchasable: sum > 0 });
+    return sum > 0;
   };
   // addIngredienthandler = (type) => {
   //   const oldCount = this.state.ingredients[type];
@@ -72,47 +72,7 @@ class BurgerBuilder extends Component {
     this.setState({ purchasing: false });
   };
   purchaseContinueHandler = () => {
-    // alert("You Continued");
-    // this.setState({ loading: true });
-    // const order = {
-    //   ingredients: this.state.ingredients,
-    //   price: this.state.totalPrice,
-    //   customerData: {
-    //     name: "Nishant Garg",
-    //     address: {
-    //       street: "test street",
-    //       zipcode: 344232,
-    //       country: "india",
-    //     },
-    //     email: "nishant@gmail.com",
-    //   },
-    //   deliveryMethod: "fastest",
-    // };
-    // axios
-    //   .post("/orders.json", order)
-    //   .then((res) => {
-    //     this.setState({ loading: false, purchasing: false });
-    //     console.log(res);
-    //   })
-    //   .catch((err) => {
-    //     this.setState({ loading: false, purchasing: false });
-
-    //     console.log(err);
-    //   });
-    const queryparams = [];
-    for (let i in this.state.ingredients) {
-      queryparams.push(
-        encodeURIComponent(i) +
-          "=" +
-          encodeURIComponent(this.state.ingredients[i])
-      );
-    }
-    queryparams.push("price=" + this.props.totalPrice);
-    const queryString = queryparams.join("&");
-    this.props.history.push({
-      pathname: "/checkout",
-      search: "?" + queryString,
-    });
+    this.props.history.push("/checkout");
   };
   render() {
     const disabledInfo = { ...this.props.ings };
@@ -132,7 +92,7 @@ class BurgerBuilder extends Component {
             ingredientRemoved={this.props.onIngredientRemoved}
             disabled={disabledInfo}
             price={this.props.totalPrice}
-            purchasable={this.state.purchasable}
+            purchasable={this.updatePurchasable(this.props.ings)}
             ordered={this.purchaseHandler}
           />
         </Wrapper>
