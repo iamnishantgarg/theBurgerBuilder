@@ -26,4 +26,8 @@
 .Invalid {
   border: 1px solid red;
   background-color: salmon;
+  /* color: black; */
+}
+.Invalid::placeholder {
+  color: black;
 }

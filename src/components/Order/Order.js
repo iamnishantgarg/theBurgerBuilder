@@ -14,7 +14,7 @@ function Order(props) {
           display: "inline-block",
           margin: "0 8px",
           border: "1px solid #ccc",
-          padding: "5px",
+          padding: "5px ",
         }}
       >
         {ig.name}({ig.amount})
