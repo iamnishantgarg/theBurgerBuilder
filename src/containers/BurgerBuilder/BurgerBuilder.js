@@ -17,8 +17,6 @@ class BurgerBuilder extends Component {
     purchasable: false,
     purchasing: false,
     loading: false,
-
-    error: null,
   };
 
   componentDidMount() {
@@ -30,6 +28,7 @@ class BurgerBuilder extends Component {
     //   .catch((error) => {
     //     this.setState({ error: error });
     //   });
+    this.props.onInitIngredients();
   }
 
   updatePurchasable = (ingredients) => {
@@ -83,7 +82,7 @@ class BurgerBuilder extends Component {
 
     let orderSummary = <Spinner />;
 
-    let burger = this.state.error ? <p>Failed to load app</p> : <Spinner />;
+    let burger = this.props.error ? <p>Failed to load app</p> : <Spinner />;
     if (this.props.ings) {
       burger = (
         <Wrapper>
@@ -129,6 +128,7 @@ const mapStateToProps = (state) => {
   return {
     ings: state.ingredients,
     totalPrice: state.totalPrice,
+    error: state.error,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -139,6 +139,7 @@ const mapDispatchToProps = (dispatch) => {
     onIngredientRemoved: (ingName) => {
       return dispatch(burgerBuilderActions.removeIngredient(ingName));
     },
+    onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients()),
   };
 };
 
