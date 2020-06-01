@@ -9,7 +9,7 @@ import Spinner from "../../components/UI//Spinner/Spinner";
 import withErrorHandler from "../../withErrorHander/withErrorHandler";
 import { connect } from "react-redux";
 // import * as actionsTypes from "../../store/actions/actionsTypes";
-import * as burgerBuilderActions from "../../store/actions/index";
+import * as actions from "../../store/actions/index";
 // import axios from "axios";
 
 class BurgerBuilder extends Component {
@@ -41,30 +41,6 @@ class BurgerBuilder extends Component {
       }, 0);
     return sum > 0;
   };
-  // addIngredienthandler = (type) => {
-  //   const oldCount = this.state.ingredients[type];
-  //   const updatedCount = oldCount + 1;
-  //   const updatedIngredients = { ...this.state.ingredients };
-  //   updatedIngredients[type] = updatedCount;
-  //   const priceAddition = INGREDIENT_PRICES[type];
-  //   const newPrice = this.state.totalPrice + priceAddition;
-  //   this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
-  //   this.updatePurchasable(updatedIngredients);
-  // };
-  // removeIngredientHandler = (type) => {
-  //   const oldCount = this.state.ingredients[type];
-  //   const oldPrice = this.state.totalPrice;
-  //   let newPrice = oldPrice;
-  //   let newCount = oldCount;
-  //   if (oldCount > 0) {
-  //     newCount = oldCount - 1;
-  //     newPrice = oldPrice - INGREDIENT_PRICES[type];
-  //   }
-  //   const updatedIngredients = { ...this.state.ingredients };
-  //   updatedIngredients[type] = newCount;
-  //   this.setState({ totalPrice: newPrice, ingredients: updatedIngredients });
-  //   this.updatePurchasable(updatedIngredients);
-  // };
   purchaseHandler = () => {
     this.setState({ purchasing: true });
   };
@@ -72,6 +48,7 @@ class BurgerBuilder extends Component {
     this.setState({ purchasing: false });
   };
   purchaseContinueHandler = () => {
+    this.props.onInitPurchased();
     this.props.history.push("/checkout");
   };
   render() {
@@ -126,20 +103,21 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    ings: state.ingredients,
-    totalPrice: state.totalPrice,
-    error: state.error,
+    ings: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice,
+    error: state.burgerBuilder.error,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
     onIngredientAdded: (ingName) => {
-      return dispatch(burgerBuilderActions.addIngredient(ingName));
+      return dispatch(actions.addIngredient(ingName));
     },
     onIngredientRemoved: (ingName) => {
-      return dispatch(burgerBuilderActions.removeIngredient(ingName));
+      return dispatch(actions.removeIngredient(ingName));
     },
-    onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients()),
+    onInitIngredients: () => dispatch(actions.initIngredients()),
+    onInitPurchased: () => dispatch(actions.purchaseInit()),
   };
 };
 
