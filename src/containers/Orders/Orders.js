@@ -27,7 +27,7 @@ class Orders extends Component {
     //     console.log(err);
     //     this.setState({ loading: false });
     //   });
-    this.props.onFetchOrders();
+    this.props.onFetchOrders(this.props.token);
   }
   render() {
     // let orders = this.state.orders.forEach((o) => {
@@ -50,12 +50,13 @@ const mapStateToProps = (state) => {
   return {
     orders: state.order.orders,
     loading: state.order.loading,
+    token: state.auth.token,
   };
 };
 
 const mapDispatchToProps = (dispath) => {
   return {
-    onFetchOrders: () => dispath(actions.fetchOrders()),
+    onFetchOrders: (token) => dispath(actions.fetchOrders(token)),
   };
 };
 
