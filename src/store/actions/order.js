@@ -62,6 +62,7 @@ export const fetchOrderStart = () => {
 
 export const fetchOrders = () => {
   return (dispatch) => {
+    dispatch(fetchOrderStart());
     axios
       .get("/orders.json")
       .then((res) => {
